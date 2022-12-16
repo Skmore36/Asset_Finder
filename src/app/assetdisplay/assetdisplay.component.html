@@ -1,0 +1,97 @@
+<div class="container-fluid g-0 p-2">
+    
+    <div class ="row g-0">
+            <div class = "row g-0">
+            <div class="row g-0 mt-3">
+                <!-- col for device details and other details -->
+                <div class ="col-md">
+                    <table class="table table-hover mx-auto">
+                        <thead class="text-center fs-5 fst-italic text-secondary">
+                            <tr>
+                                <td colspan="2">Asset Details</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Asset Name</td>
+                                <td>{{asset.assetname}}</td>
+                            </tr>
+                            <tr>
+                                <td>serial Number</td>
+                                <td>{{asset.serialnumber}}</td>
+                            </tr>
+                            <tr>
+                                <td>PO Number</td>
+                                <td>{{asset.ponumber}}</td>
+                            </tr>
+                            <tr>
+                                <td>Status of Asset</td>
+                                <td>{{asset.statusofasset}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                    <table class="table table-hover mx-auto">
+                    <thead class="text-center fs-5 fst-italic text-secondary">
+                        <tr>
+                            <td colspan="2">Other Information</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Project Name</td>
+                            <td>{{asset.projectname}}</td>
+                        </tr>
+                        <tr>
+                            <td>PM Name</td>
+                            <td>{{asset.pmname}} </td>
+                        </tr>
+                        <tr>
+                            <td>Device Manager</td>
+                            <td>{{asset.devicemanager}} </td>
+                        </tr>
+                        <tr>
+                            <td> User</td>
+                            <td>{{asset.user}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div class="col">
+                    <table class="table table-hover mx-auto">
+                    <thead class="text-center fs-5 fst-italic text-secondary">
+                        <tr>
+                            <td colspan="2">Contact Information</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Location</td>
+                            <td>{{asset.location}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Info</td>
+                            <td>{{asset.email}} </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                 <!-- col for edit and add button -->
+                 <div class="col-md-2 d-flex justify-content-center align-items-right">
+                    <div class="btn-group buttons" role="group">
+                        <button type="button" class="btn btn-outline-success"
+                        (click)="editAssetClicked()">Edit</button>
+                        <button type="button" class="btn btn-outline-danger"
+                        (click)="deleteAssetClicked()">Delete</button>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

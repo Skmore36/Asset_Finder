@@ -1,0 +1,213 @@
+
+
+<div class="container-fluid g-0">
+   
+    <!-- MAIN CONTENT -->
+    <main class="black-borde">
+  
+      <!-- TOOBAR TO ADD AND SEARCH EMPLOYEES -->
+      <div class="toolbar">
+  
+        <div class="add-asset Manually">
+          <button type="button" class="btn btn-outline-success btn-lg" data-bs-toggle="modal"
+            data-bs-target="#exampleModal" #addAssetButton>Add Asset Manually</button>
+        </div>
+        <div class="add-asset through scanner">
+          <button type="button" class="btn btn-outline-success btn-lg" data-bs-toggle="modal"
+            data-bs-target="#exampleModal_1" #addAssetButton>Add Asset via Scanner</button>
+        </div>
+  
+        <div class="search-assets">
+          <input type="search" class="form-control" placeholder="Search Assets"
+            (input)="searchAsset(searchInput.value)" #searchInput>
+        </div>
+  
+      </div>
+  
+      <!-- AREA TO DISPLAY ALL THE assets -->
+      <div class="assets">
+  
+        <div class="row mt-5" *ngIf="assets.length == 0">
+          <div class="col text-center">
+            <span class="text-secondary fs-2 fw-bold fst-italic">There are No Assets Added!</span>
+          </div>
+        </div>
+  
+        <div class="row mt-4" *ngFor="let assets of assetstodisplay; let ei = index;">
+          <div class="col mt-9">
+            <app-assetdisplay [asset]="assets" (onRemoveAsset)="removeasset($event)"
+              (onEditAsset)="editasset($event)"></app-assetdisplay>
+          </div>
+        </div>
+  
+        
+      </div>
+    </main>
+ </div>
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Enter Asset Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+      
+         
+        <div class="modal-body">
+          
+  
+          <form [formGroup]="assetform">
+  
+            <!-- FIRST AND LAST NAME -->
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Asset Details" formControlName="assetname">
+              </div>
+            </div>
+  
+            <!-- PERSONAL INFORMATION -->
+            <div class="row mt-5">
+              <div class="col form-heading">
+                <h6 class="text-secondary fst-italic">Asset Information</h6>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Serial Number" formControlName="serialnumber">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="PO Number" formControlName="ponumber">
+                </div>
+                  <div class="col">
+                    <input type="text" class="form-control" placeholder="Status Of Asset" formControlName="statusofasset">         
+                  </div>
+                </div>
+             
+         
+  
+            <!-- <div class="row mt-3">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Status of asset" formControlName="statusofasset">
+              </div>
+            </div> -->
+  
+  
+            <!-- JOB INFORMATION -->
+            <div class="row mt-5">
+              <div class="col form-heading">
+                <h6 class="text-secondary fst-italic">Other Information</h6>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Project NAME" formControlName="projectname">
+              </div>
+              
+            </div>
+  
+            <div class="row mt-3">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="PM NAME" formControlName="pmname">
+                  </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Name of User" formControlName="user">
+              </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Location"
+                    formControlName="location">
+                </div>
+                </div>
+                <div class="row mt-3">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Email to Contact" formControlName="email">
+                </div>
+              </div>
+          </form>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addAsset()">Insert</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal_1" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enter Asset Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+    
+       
+      <div class="modal-body">
+        
+
+      <div>
+        <h1> Asset  Scanner</h1>
+  
+        <div class="container">
+          <h1> ngx-scanner-qrcode </h1>
+        
+          <!-- ngx-scanner-qrcode -->
+          <ngx-scanner-qrcode #action="scanner" [config]="config" (event)="onEvent($event)" (error)="onError($event)"></ngx-scanner-qrcode>
+        
+          <!-- data  -->
+          <p class="data">{{ action.data | async }}</p>
+        
+          <!-- Loading -->
+          <p *ngIf="action.isLoading">⌛ Loading...</p>
+        
+          <!-- toggleCamera -->
+          <button class="btn" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading">
+            <img *ngIf="!action.isStart" (click)="handle(action, 'start')" src="https://img.icons8.com/ios/50/000000/no-camera--v2.png" width="30px"/>
+            <img *ngIf="action.isStart" (click)="handle(action, 'stop')" src="https://img.icons8.com/ios/50/000000/no-camera--v1.png" width="30px"/>
+          </button>
+        
+          <button class="btn" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading" (click)="handle(action, 'start')">Start</button>
+          <button class="btn" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading" (click)="handle(action, 'play')">Play</button>
+          <button class="btn" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading" (click)="handle(action, 'pause')">Pause</button>
+          <button class="btn" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading" (click)="handle(action, 'stop')">Stop</button>
+          <button class="btn" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading" (click)="action.download('ngx-scanner-qrcode')">Cap</button>
+        
+          <br>
+          
+          <!-- For select files -->
+          <input #file type="file" (change)="onSelects(file.files)" [multiple]="'multiple'" [accept]="'.jpg, .png, .gif, .jpeg'" class="btn btn-success my-2"/>
+        
+          <ol>
+            <li *ngFor="let row of selectedFiles">
+              <img [src]="row.urlQR " [alt]="row.name" width="100%">
+              <p class="data">{{row.dataQR}}</p>
+              <!-- <ngx-scanner-qrcode #actionFile="scanner" [src]="row.url || ''" [config]="{style: { width: '100%', background: '#FFF' }}"> 
+                <p class="data">{{ actionFile.data | async }}</p>
+              </ngx-scanner-qrcode> -->
+            </li>
+          </ol>
+        
+          <!-- License -->
+          <p class="center"><a href="https://github.com/id1945/ngx-scanner-face/blob/master/LICENSE">MIT License</a></p>
+        
+          <!-- Copyright -->
+          <p class="center">Copyright (c) 2022 DaiDH</p>
+        </div>
+ 
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onEvent()">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
